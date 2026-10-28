@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "MATRIX / TETRIS"
+description = "Одностраничный Тетрис на TypeScript с цифровым дождём в стиле Матрицы, выбором сложности и управлением с клавиатуры и телефона. Работает полностью в браузере."
+version = "1.0.0"
+id = "artifacts/matrix-tetris"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23495
+
+[services.development]
+run = "pnpm --filter @workspace/matrix-tetris run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/matrix-tetris", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/matrix-tetris/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23495"
+BASE_PATH = "/"
